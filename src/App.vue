@@ -1,6 +1,12 @@
 <template>
   <h1 class="text-center">Ciao</h1>
   <i class="fa fa-solid fa-home"></i>
+  <ul>
+    <li v-for="project in projects" :key="project.id">
+      <h1>{{ project.title }}</h1>
+      <p v-html="project.description"></p>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -12,18 +18,19 @@ export default {
   data() {
     return {
       store,
-      project: []
+      projects: []
     }
   },
   methods: {
     getAllProject() {
       axios.get(this.store.apiBaseUrl + '/projects').then((res) => {
-        console.log(res.data)
+        console.log(res.data);
+        this.projects = res.data.results;
       })
     }
   },
   mounted() {
-    this.getAllProject()
+    this.getAllProject();
   }
 }
 </script>
