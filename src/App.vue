@@ -4,9 +4,19 @@
   <main class="container">
     <router-view></router-view>
   </main>
+  <FooterComponent />
 </template>
 
 <script>
+import FooterComponent from './components/FooterComponent.vue';
+import { store } from './store';
+import axios from 'axios';
+export default {
+  name: 'App',
+  components: {
+    FooterComponent
+  }
+}
 
 </script>
 
