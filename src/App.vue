@@ -1,13 +1,13 @@
 <template>
   <h1 class="text-center">Ciao</h1>
   <i class="fa fa-solid fa-home"></i>
-  <button @click="getAllProject()" class="btn btn-primary">Cambia pagina</button>
 
   <ul>
     <li v-for="project in projects" :key="project.id">
       <h1>{{ project.title }}</h1>
       <img :src="store.imgBasePath + project.image" :alt="project.title">
       <p v-html="project.description"></p>
+      <p class="badge bg-primary" v-if="project.category">{{ project.category.name }}</p>
     </li>
   </ul>
 </template>
@@ -21,18 +21,17 @@ export default {
   data() {
     return {
       store,
-      projects: [],
-      currentPage: 0,
-      nextPage: 0
+      projects: []
     }
   },
   methods: {
     getAllProject() {
-      this.nextPage = this.currentPage + 1;
-      axios.get(this.store.apiBaseUrl + '/projects', { params: { page: this.nextPage } }).then((res) => {
+      axios.get(this.store.apiBaseUrl + '/projects').then((res) => {
         console.log(res.data);
-        this.projects = res.data.results.data;
-        this.currentPage = res.data.results.current_page;
+        this.projects = res.data.results;
+        //se paginato uso questo, più params -> { params: { page: this.nextPage } }
+        //this.projects = res.data.results.data;
+        //this.currentPage = res.data.results.current_page;
       })
     }
   },
